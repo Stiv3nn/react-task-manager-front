@@ -1,0 +1,11 @@
+td.todo {
+    background-color: hsl(6, 78%, 77%);
+}
+
+td.doing {
+    background-color: hsl(48, 89%, 70%);
+}
+
+td.done {
+    background-color: hsl(145, 63%, 69%);
+}
