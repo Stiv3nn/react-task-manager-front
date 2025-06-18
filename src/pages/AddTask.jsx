@@ -1,11 +1,16 @@
 // 37 --> IMPORTO USESTATE E USEREF PER GLI INPUT CONTROLLATI E NON CONTROLLATI (MILESTONE 5)
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useContext } from "react";
+// 50 --> IMPORTO GLOBALCONTEXT (MILESTONE 6)
+import { GlobalContext } from "../../context/GlobalContext";
 
 // 40 --> VALIDAZIONE DEL NOME (MILESOTNE 5)
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`";
 
 // 6 --> FARE L'EXPORT E LA FUNZIONE DI DEFAULT INIZIALE (MILESTONE 1)
 function AddTask() {
+
+    // 51 --> DESTRUTTURARE ADDTASK PER POI UTILIZZARLO ALL'INTERNO DI HANDLESUBMIT (MILESTONE 6)
+    const { addTask } = useContext(GlobalContext);
 
     // 38 --> PREPARIAMO I NOSTRI STATI E RIFERIMENTI (MILESOTNE 5)
     const [taskTitle, setTaskTitle] = useState("");
@@ -24,7 +29,8 @@ function AddTask() {
     }, [taskTitle]);
 
     // 45 --> FUNZIONE DEL HANDLESUBMIT DEL FORM (MILESTONE 5)
-    const handleSubmit = event => {
+    // 52 --> RENDO LA FUNZIONE ASINCRONA (MILESONTE 6)
+    const handleSubmit = async event => {
         event.preventDefault();
         if (taskTitleError)
             return;
@@ -35,8 +41,21 @@ function AddTask() {
             status: statusRef.current.value
         }
 
-        // 47 --> STAMAPRELO IN CONSOLE (MILESTONE 5)
-        console.log('Task da aggiungere:', newTask);
+        // 47 --> STAMPARLO IN CONSOLE (MILESTONE 5)
+        // console.log('Task da aggiungere:', newTask);
+
+        // 49 --> GESTIONE DELL'ERRORE (MILESTONE 6)
+        try {
+            await addTask(newTask);
+            alert("Task creata con successo!")
+            // 53 --> RESETTARE IL FORM ESSENDO CHE E' CONTROLLATO (MILESTONE 6)
+            setTaskTitle("");
+            // 54 --> INVECE PER QUELLI NON CONTROLLATI FACCIAMO COSI: (MILESTONE 6)
+            descriptionRef.current.value = "";
+            statusRef.current.value = "";
+        } catch (error) {
+            alert(error.messagge);
+        }
     }
 
 

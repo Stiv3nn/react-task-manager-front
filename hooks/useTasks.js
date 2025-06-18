@@ -16,8 +16,19 @@ function useTasks() {
     }, []);
 
     // 32 --> CREAZIONE DELLA FUNZIONE ADDTASK, CHE PRENDERA' UNA NUOVA TASK DA CREARE (MILESTONE 4)    
-    const addTask = (newTask) => {
+    // 48 --> RENDERE QUESTA FUNZIONE ASINCRONA (MILESTONE 6)
+    const addTask = async newTask => {
         // EFFETTUARE LE OPERAZIONI
+        const response = await fetch(`${VITE_API_URL}/tasks`, {
+            method: 'POST',
+            headers: {"Content-Type:": "application/json"},
+            body: JSON.stringify(newTask)
+        });
+        const { success, message, task } = await response.json();
+        // CONTROLLO SE SUCCESS E' FALSE, E SE E' FALSE LANCIO IL MIO ERRORE 
+        if (!success) throw new Error(message);
+        // INVECE SE VA A BUON FINE LANCIO LA MIA TASK
+        setTasks (prev => [...prev, task]);
     }
 
     // 33 --> CREAZIONE DELLA FUNZIONE REMOVETASK, CHE BASTERA' UN TASKID PER CAPIRE COSA FARE (MILESTONE 4)
