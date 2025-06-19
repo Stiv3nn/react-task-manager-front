@@ -6,6 +6,8 @@ import TaskList from "./pages/TaskList"
 import AddTask from "./pages/AddTask"
 // 19 --> IMPORTO GLOBALPROVIDER (MILESTONE 2)
 import { GlobalProvider } from "./context/GlobalContext"
+// 56 --> IMPORTO LA PAGINA TASKDETAIL (MILESTONE 7)
+import TaskDetail from "./pages/TaskDetail"
 
 
 
@@ -28,6 +30,8 @@ function App() {
           <Route path="/" element={<TaskList />} />
           {/* 4 --> CREARE LA ROTTA ADDTASK.JSX CON IL PATH APPOSITO E L'ELEMENTO APPOSITO (MILESTONE 1) ---> POI SONO ANDATO A CREARE I COMPONENTI CHE SONO LE MIE PAGINE ALL'INTERNO DELLA CARTELLA "pages" */}
           <Route path="/add" element={<AddTask />} />
+          {/* 57 --> CREAZIONE DELLA ROTTA TASKDETAIL(MILESTONE 7)*/}
+          <Route path="/task/:id" element={<TaskDetail />} />
         </Routes>
 
       </BrowserRouter>
