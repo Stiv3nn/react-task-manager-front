@@ -1,7 +1,9 @@
 // 58 --> IMPORTO USEPARAMS e USECONTEXT e GLOBALCONTEXT PER VEDERE IN QUALE TASK CI TROVIAMO (MILESTONE 7)
 import { useParams, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
+// 75 --> IMPORTO LA MODALE CREATA (MIELSTONE 9)
+import Modal from "../components/Modal";
 
 // 55 --> CREAZIONE DELLA PAGINA TASKDETAIL PER L'INSERIMENTO DELLA NUOVA ROTTA DEI LINK (MILESTONE 7)
 function TaskDetail() {
@@ -21,6 +23,9 @@ function TaskDetail() {
         )
     }
 
+    // 76 --> CREAZIONE DELLO STATO SHOW E SETSHOW (MILESTONE 9)
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
     // 64 --> CREAZIONE DELLA FUNZIONE PER ELEMINARE UNA TASK "HANDLEDELETE" (MILESTONE 7)
     // 70 --> QUESTA FUNZIONE DEV'ESSERE ASINCRONA (MILESTONE 8)
     const handleDelete = async () => {
@@ -32,10 +37,9 @@ function TaskDetail() {
         } catch (error) {
             console.log(error);
             alert(error.message);
-            
         }
     }
-    
+
     return (
         // 63 --> RITORNO I DETTAGLI DELLE TASK AL CLICK (MILESTONE 7)
         <div>
@@ -44,7 +48,18 @@ function TaskDetail() {
             <p><strong>Descrizione:</strong> {task.description}</p>
             <p><strong>Stato:</strong> {task.status}</p>
             <p><strong>Data di Creazione:</strong> {new Date(task.createdAt).toLocaleString()}</p>
-            <button onClick={handleDelete}>Elimina Task</button>
+            {/* <button onClick={handleDelete}>Elimina Task</button> */}
+            {/* 77 --> NON ANDIAMO A FARE PIU' HANDLEDELETE MA SETSHOWDELETEMODAL (MIELSTONE 9) */}
+            <button onClick={() => setShowDeleteModal(true)}>Elimina Task</button>
+            {/* 78 --> CREAZIONE DELLA NOSTRA MODALE DI CONFERMA ELIMINAZIONE (MILESTONE 9) */}
+            <Modal
+                title="Conferma Eliminazione"
+                content={<p>Sei sicuro di eliminare questa task</p>}
+                show={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleDelete}
+                confirmText="Elimina"
+            />
         </div>
     )
 }
