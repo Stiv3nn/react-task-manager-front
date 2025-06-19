@@ -1,9 +1,9 @@
 // 21 --> VERIFICHIAMO LE NOSTRE CHIAMATE DI USEEFFECT PER LEGGERE LE TASKS E IMPORTIAMO USECONTEXT CHE E' IL NOSTORN HOOK (MILESTONE 2)
 import { useContext } from "react";
 // 22 --> VERIFICHIAMO LE NOSTRE CHIAMATE DI USEEFFECT PER LEGGERE LE TASKS E IMPORTIAMO GLOBALCONTEXT (MILESTONE 2)
-import { GlobalContext } from "../../context/GlobalContext";
+import { GlobalContext } from "../context/GlobalContext";
 // 27 --> IMPORTO TASKROW (MILESTONE 3)
-import TaskRow from "../../components/TaskRow";
+import TaskRow from "../components/TaskRow";
 
 // 5 --> FARE L'EXPORT E LA FUNZIONE DI DEFAULT INIZIALE (MILESTONE 1)
 function TaskList() {

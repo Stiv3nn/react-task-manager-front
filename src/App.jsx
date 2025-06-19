@@ -5,7 +5,7 @@ import TaskList from "./pages/TaskList"
 // 8 --> IMPORTO IL ADDTASK (MILESTONE 1)
 import AddTask from "./pages/AddTask"
 // 19 --> IMPORTO GLOBALPROVIDER (MILESTONE 2)
-import { GlobalProvider } from "../context/GlobalContext"
+import { GlobalProvider } from "./context/GlobalContext"
 
 
 

@@ -1,7 +1,7 @@
 // 37 --> IMPORTO USESTATE E USEREF PER GLI INPUT CONTROLLATI E NON CONTROLLATI (MILESTONE 5)
 import { useState, useRef, useMemo, useContext } from "react";
 // 50 --> IMPORTO GLOBALCONTEXT (MILESTONE 6)
-import { GlobalContext } from "../../context/GlobalContext";
+import { GlobalContext } from "../context/GlobalContext";
 
 // 40 --> VALIDAZIONE DEL NOME (MILESOTNE 5)
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`";
