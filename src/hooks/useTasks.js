@@ -46,8 +46,19 @@ function useTasks() {
     }
 
     // 34 --> CREAZIONE DELLA FUNZIONE UPDATETASK, A CUI PASSEREMO UPDATEDTASK (MILESTONE 4)
-    const updateTask = (updateTask) => {
+    // 79 --> RENDER LA FUNZIONE ASIMCRONA (MILESTONE 10)
+    const updateTask = async updateTask => {
         // EFFETTUARE LE OPERAZIONI
+        const response = await fetch(`${VITE_API_URL}/tasks/${updatedTask.id}`, {
+            method: 'PUT',
+            headers: { "Content-Type:": "application/json" },
+            body: JSON.stringify(updateTask)
+        });
+        const { success, message, task: newTask } = await response.json();
+        // CONTROLLO SE SUCCESS E' FALSE, E SE E' FALSE LANCIO IL MIO ERRORE 
+        if (!success) throw new Error(message);
+        // ALTRIMENTI 
+        setTasks(prev => prev.map(oldTask => oldTask.id === newTask.id ? newTask : oldTask));
     }
 
     return { tasks, addTask, removeTask, updateTask };

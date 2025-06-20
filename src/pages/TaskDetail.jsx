@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 // 75 --> IMPORTO LA MODALE CREATA (MIELSTONE 9)
 import Modal from "../components/Modal";
+// 91 --> IMPORTIAMO EDITTASKMODAL
+import EditTaskModal from "../components/EditTaskModal";
 
 // 55 --> CREAZIONE DELLA PAGINA TASKDETAIL PER L'INSERIMENTO DELLA NUOVA ROTTA DEI LINK (MILESTONE 7)
 function TaskDetail() {
@@ -12,8 +14,8 @@ function TaskDetail() {
     // 67 --> INIZIALIZZIAMO USENAVIGATE (MILESTONE 8)
     const navigate = useNavigate();
     // 60 --> PRENDERE TUTTE LE TASK (MILESTONE 7)
-    // 68 --> DESTRUTTURO ANCHE REMOVOMETASK (MILESTONE 8)
-    const { tasks, removeTask } = useContext(GlobalContext);
+    // 68 --> DESTRUTTURO ANCHE REMOVOMETASK E NON SOLO (MILESTONE 8)
+    const { tasks, removeTask, updateTask } = useContext(GlobalContext);
     // 61 --> RACCOGLIERE LA SINGOLA TASKS (MILESTONE 7)
     const task = tasks.find(t => t.id === parseInt(id));
     // 62 --> SE NON TROVO NESSUNA TASK, VUOL DIRE CHE L'UTENTE HA SCRITTO MANUALMENTE L'INDIRIZZO CHE RAPPRESENTA UN ID CHE NON ESISTE (MILESTONE 7)
@@ -25,6 +27,8 @@ function TaskDetail() {
 
     // 76 --> CREAZIONE DELLO STATO SHOW E SETSHOW (MILESTONE 9)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    // 90 --> CREAZIONE DELLO STATO PER IL BUTTON MODIFICA TASK (MILESTONE 10)
+    const [showEditModal, setShowEditModal] = useState(false);
 
     // 64 --> CREAZIONE DELLA FUNZIONE PER ELEMINARE UNA TASK "HANDLEDELETE" (MILESTONE 7)
     // 70 --> QUESTA FUNZIONE DEV'ESSERE ASINCRONA (MILESTONE 8)
@@ -34,6 +38,17 @@ function TaskDetail() {
             await removeTask(task.id);
             alert("Task eliminata con successo!");
             navigate("/");
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+        }
+    }
+
+    // 93 --> CREAZIONE DELLA HANDLEUPDATE PER LA MODALE DI MODIFICA TASK ONSAVE (MILESTONE 10)
+    const handleUpdate = async updateTask => {
+         try {
+            await updateTask(updateTask);
+            setShowEditModal(false)
         } catch (error) {
             console.log(error);
             alert(error.message);
@@ -51,6 +66,8 @@ function TaskDetail() {
             {/* <button onClick={handleDelete}>Elimina Task</button> */}
             {/* 77 --> NON ANDIAMO A FARE PIU' HANDLEDELETE MA SETSHOWDELETEMODAL (MIELSTONE 9) */}
             <button onClick={() => setShowDeleteModal(true)}>Elimina Task</button>
+            {/* 89 --> CREAIZIONE DEL BUTTON MODIFICA (MILESTONE 10)*/}
+            <button onClick={() => setShowEditModal(true)}>Modifica Task</button>
             {/* 78 --> CREAZIONE DELLA NOSTRA MODALE DI CONFERMA ELIMINAZIONE (MILESTONE 9) */}
             <Modal
                 title="Conferma Eliminazione"
@@ -59,6 +76,14 @@ function TaskDetail() {
                 onClose={() => setShowDeleteModal(false)}
                 onConfirm={handleDelete}
                 confirmText="Elimina"
+            />
+
+            {/* 92 --> CREAZIONE DELLA MODALE DI MODIFICA TASK (MILESTONE 10) */}
+             <EditTaskModal
+                task={task}
+                show={showEditModal}
+                onClose={() => setShowEditModal(false)}
+                onSave={handleUpdate}
             />
         </div>
     )
